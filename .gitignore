@@ -1,0 +1,17 @@
+# Tmp
+*.swp
+*.swo
+*.pyc
+.DS_Store
+__pycache__/
+
+# Virtual environment
+venv/
+
+# Nodejs
+node_modules
+.npm
+
+# Configs
+.env
+.vscode/

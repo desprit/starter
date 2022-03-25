@@ -1,0 +1,39 @@
+version: "2.1"
+services:
+  myproject_redis:
+    env_file: .development.env
+    ports:
+      - "6379:6379"
+
+  myproject_api:
+    env_file: .development.env
+    ports:
+      - "3031:3031"
+
+  myproject_web:
+    ports:
+      - "4042:4042"
+
+  myproject_nginx:
+    container_name: myproject_nginx
+    build:
+      context: ../nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "../nginx/certs:/root/data/myproject/certs:ro"
+      - "../nginx/myproject.dev.conf:/etc/nginx/myproject.conf"
+      - "/var/log/myproject:/var/log/myproject"
+    environment:
+      - NGINX_PORT=80
+    command: bash -c "nginx -g 'daemon off;'"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "128m"
+    depends_on:
+      myproject_api:
+        condition: service_started
+      myproject_web:
+        condition: service_started

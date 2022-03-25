@@ -1,0 +1,45 @@
+version: "2.1"
+services:
+  myproject_redis:
+    container_name: myproject_redis
+    image: "redis:alpine"
+    volumes:
+      - "/var/lib/redis/6379/myproject:/data"
+    command:
+      ["sh", "-c", "redis-server --requirepass $$REDIS_PASS --appendonly yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "-p", "6379", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "128m"
+
+  myproject_api:
+    container_name: myproject_api
+    build:
+      context: ../api
+    command: uvicorn main:app --reload --host=0.0.0.0 --port=3031
+    depends_on:
+      myproject_redis:
+        condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "128m"
+
+  myproject_web:
+    container_name: myproject_web
+    build:
+      context: ../web
+    volumes:
+      - "../web:/opt/myproject/web"
+      - "../nginx/certs:/root/data/myproject/certs:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    command: yarn dev
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "128m"

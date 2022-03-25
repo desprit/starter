@@ -50,4 +50,4 @@ Happens to me on MacOS. Would keep showing "Your connection is not private" and 
 
 2. Web service dies with "esbuild-wasm" platform warnings
 
-This happens on MacOS with M1 chip. Replace `yarn dev` with `npm rebuild esbuild && yarn dev` in `docker-compose.base.yml`.
+This happens on MacOS with M1 chip. Replace `yarn dev` with `bash -c "npm rebuild esbuild && yarn dev"` in `docker-compose.base.yml`.

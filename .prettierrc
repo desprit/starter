@@ -1,0 +1,6 @@
+{
+  "trailingComma": "none",
+  "indentSize": "4",
+  "vueIndentScriptAndStyle": true,
+  "htmlWhitespaceSensitivity": "ignore"
+}

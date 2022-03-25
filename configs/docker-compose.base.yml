@@ -21,6 +21,10 @@ services:
     container_name: myproject_api
     build:
       context: ../api
+    volumes:
+      - "../api:/opt/myproject/api"
+      - "/var/log/myproject:/var/log/myproject"
+      - "/etc/localtime:/etc/localtime:ro"
     command: uvicorn main:app --reload --host=0.0.0.0 --port=3031
     depends_on:
       myproject_redis:
@@ -38,7 +42,7 @@ services:
       - "../web:/opt/myproject/web"
       - "../nginx/certs:/root/data/myproject/certs:ro"
       - "/etc/localtime:/etc/localtime:ro"
-    command: yarn dev
+    command: bash -c "npm rebuild esbuild && yarn dev"
     logging:
       driver: "json-file"
       options:

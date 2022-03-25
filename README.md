@@ -1,6 +1,7 @@
 # Information
 
-A starter for Web apps of four Docker services: 
+A starter for Web apps of four Docker services:
+
 - Python API
 - VueJS frontend
 - Nginx reverse proxy
@@ -32,7 +33,7 @@ Nagivate to https://web.myproject.test, you should see VueJS default starter pag
 Send request to Python API:
 
 ```sh
-curl https://web.myproject.test/ping
+curl -k https://web.myproject.test/api/v1/ping
 ```
 
 # Terminating
@@ -46,3 +47,7 @@ make down
 1. SSL certificate not accepted by the browser
 
 Happens to me on MacOS. Would keep showing "Your connection is not private" and wouldn't let me open the page. Type "thisisunsafe" to fix that.
+
+2. Web service dies with "esbuild-wasm" platform warnings
+
+This happens on MacOS with M1 chip. Replace `yarn dev` with `npm rebuild esbuild && yarn dev` in `docker-compose.base.yml`.

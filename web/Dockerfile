@@ -1,4 +1,4 @@
 FROM node:16
 
-WORKDIR /opt/myproject/ui
+WORKDIR /opt/myproject/web
 COPY . .

@@ -2,6 +2,6 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("ping", response_model=str)
+@app.get("/api/v1/ping", response_model=str)
 async def ping():
     return "pong"
